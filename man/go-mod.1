@@ -1,0 +1,48 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH GO 1 "2021-09-06"
+.\" Please adjust this date whenever revising the manpage.
+.SH NAME
+go-mod \- module maintenance
+.SH SYNOPSIS
+.B go mod
+.I command
+.RI [ arguments ]
+.SH DESCRIPTION
+Go mod provides access to operations on modules.
+.P
+Note that support for modules is built into all the go commands,
+not just 'go mod'. For example, day-to-day adding, removing, upgrading,
+and downgrading of dependencies should be done using 'go get'.
+See 'go help modules' for an overview of module functionality.
+.SH COMMANDS
+.TP
+.B download
+download modules to local cache
+.TP
+.B edit
+edit go.mod from tools or scripts
+.TP
+.B graph
+print module requirement graph
+.TP
+.B init
+initialize new module in current directory
+.TP
+.B tidy
+add missing and remove unused modules
+.TP
+.B vendor
+make vendored copy of dependencies
+.TP
+.B verify
+verify dependencies have expected content
+.TP
+.B why
+explain why packages or modules are needed
+.P
+Use "go help mod <command>" for more information about a command.
+.SH AUTHOR
+This manual page and is maintained by the 
+Debian Go Compiler Team <team+go-compiler@tracker.debian.org>
+based on the output of 'go help mod'
+for the Debian project (and may be used by others).

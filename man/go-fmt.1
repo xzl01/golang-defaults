@@ -1,0 +1,38 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH GO-FMT 1 "2021-09-06"
+.\" Please adjust this date whenever revising the manpage.
+.SH NAME
+go-fmt \- gofmt (reformat) package sources
+.SH SYNOPSIS
+.B go fmt
+.RB [ \-n ]
+.RB [ \-x ]
+.RI [ packages ]
+.SH DESCRIPTION
+Fmt runs the command 'gofmt \-l \-w' on the packages named
+by the import paths.  It prints the names of the files that are modified.
+.P
+For more about gofmt, see 'go doc cmd/gofmt'.
+.br
+For more about specifying packages, see \fBgo-packages\fP(7).
+.TP
+.B \-n
+The \-n flag prints commands that would be executed.
+.TP
+.B \-x
+The \-x flag prints commands as they are executed.
+.TP
+.B \-mod
+The \-mod flag's value sets which module download mode
+to use: readonly or vendor. See 'go help modules' for more.
+.P
+To run gofmt with specific options, run gofmt itself.
+.SH SEE ALSO
+.BR go-fix (1),
+.BR go-vet (1).
+.SH AUTHOR
+This manual page was written by Michael Stapelberg <stapelberg@debian.org>
+and is maintained by the
+Debian Go Compiler Team <team+go-compiler@tracker.debian.org>
+based on the output of 'go help fmt'
+for the Debian project (and may be used by others).

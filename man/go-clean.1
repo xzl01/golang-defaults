@@ -1,0 +1,95 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH GO-CLEAN 1 "2021-09-06"
+.\" Please adjust this date whenever revising the manpage.
+.SH NAME
+go-clean \- remove object files and cached files
+.SH SYNOPSIS
+.B go clean
+.RB [ \-i ]
+.RB [ \-r ]
+.RB [ \-n ]
+.RB [ \-x ]
+.RI [ packages ]
+.SH DESCRIPTION
+Clean removes object files from package source directories.
+The go command builds most objects in a temporary directory,
+so go clean is mainly concerned with object files left by other
+tools or by manual invocations of go build.
+.P
+If a package argument is given or the \-i or \-r flag is set,
+clean removes the following files from each of the
+source directories corresponding to the import paths:
+.TP
+.B _obj/
+old object directory, left from Makefiles
+.TP
+.B _test/
+old test directory, left from Makefiles
+.TP
+.B _testmain.go
+old gotest file, left from Makefiles
+.TP
+.B test.out
+old test log, left from Makefiles
+.TP
+.B build.out
+old test log, left from Makefiles
+.TP
+.B *.[568ao]
+object files, left from Makefiles
+
+.TP
+.B DIR(.exe)
+from go build
+.TP
+.B DIR.test(.exe)
+from go test \-c
+.TP
+.B MAINFILE(.exe)
+from go build MAINFILE.go
+.TP
+.B *.so
+from SWIG
+.P
+In the list, DIR represents the final path element of the
+directory, and MAINFILE is the base name of any Go source
+file in the directory that is not included when building
+the package.
+.SH OPTIONS
+.TP
+.B \-i
+The \-i flag causes clean to remove the corresponding installed
+archive or binary (what 'go install' would create).
+.TP
+.B \-n
+The \-n flag causes clean to print the remove commands it would execute,
+but not run them.
+.TP
+.B \-r
+The \-r flag causes clean to be applied recursively to all the
+dependencies of the packages named by the import paths.
+.TP
+.B \-x
+The \-x flag causes clean to print remove commands as it executes them.
+.TP
+.B \-cache
+The \-cache flag causes clean to remove the entire go build cache.
+.TP
+.B \-testcache
+The -testcache flag causes clean to expire all test results in the
+go build cache.
+.TP
+.B \-modcache
+The \-modcache flag causes clean to remove the entire module
+download cache, including unpacked source code of versioned
+dependencies.
+.P
+For more about build flags, see \fBgo-build\fP(1).
+.P
+For more about specifying packages, see \fBgo-packages\fP(7).
+.SH AUTHOR
+This manual page was written by Michael Stapelberg <stapelberg@debian.org>
+and is maintained by the
+Debian Go Compiler Team <team+go-compiler@tracker.debian.org>
+based on the output of 'go help clean'
+for the Debian project (and may be used by others).

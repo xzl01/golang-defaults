@@ -1,0 +1,25 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH GO-FIX 1 "2021-09-06"
+.\" Please adjust this date whenever revising the manpage.
+.SH NAME
+go-fix \- update packages to use new APIs
+.SH SYNOPSIS
+.B go fix
+.RI [ packages ]
+.SH DESCRIPTION
+Fix runs the Go fix command on the packages named by the import paths.
+.P
+For more about fix, see 'go doc cmd/fix'.
+.br
+For more about specifying packages, see \fBgo-packages\fP(7).
+.P
+To run fix with specific options, run 'go tool fix'.
+.SH SEE ALSO
+.BR go-fmt (1),
+.BR go-vet (1).
+.SH AUTHOR
+This manual page was written by Michael Stapelberg <stapelberg@debian.org>
+and is maintained by the
+Debian Go Compiler Team <team+go-compiler@tracker.debian.org>
+based on the output of 'go help fix'
+for the Debian project (and may be used by others).

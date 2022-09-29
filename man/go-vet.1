@@ -1,0 +1,65 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.de Vb \" Begin verbatim text
+.ft CW
+.nf
+.ne \\$1
+..
+.de Ve \" End verbatim text
+.ft R
+.fi
+..
+.TH GO-VET 1 "2021-09-06"
+.\" Please adjust this date whenever revising the manpage.
+.SH NAME
+go-vet \- report likely mistakes in packages
+.SH SYNOPSIS
+.B go vet
+.RB [ \-n ]
+.RB [ \-x ]
+.RB [ \-vettool
+.IR prog ]
+.RI [ "build flags" ]
+.RI [ "vet flags" ]
+.RI [ packages ]
+.SH DESCRIPTION
+Vet runs the Go vet command on the packages named by the import paths.
+.P
+For more about vet and its flags, see 'go doc cmd/vet'.
+.br
+For more about specifying packages, see \fBgo-packages\fP(7).
+.br
+For a list of checkers and their flags, see 'go tool vet help'.
+.br
+For details of a specific checker such as 'printf', see 'go tool vet help printf'.
+.SH OPTIONS
+.TP
+.B \-n
+The \-n flag prints commands that would be executed.
+.TP
+.B \-x
+The \-x flag prints commands as they are executed.
+.TP
+.BI \-vettool= prog
+The \-vettool=prog flag selects a different analysis tool with alternative
+or additional checks.
+.br
+For example, the 'shadow' analyzer can be built and run using these commands:
+
+.Vb 6
+\&  go install golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow
+\&  go vet \-vettool=$(which shadow)
+.Ve
+.P
+The build flags supported by go vet are those that control package resolution
+and execution, such as \-n, \-x, \-v, \-tags, and \-toolexec.
+For more about these flags, see 'go help build'.
+.SH SEE ALSO
+.BR go-fmt (1),
+.BR go-fix (1).
+.SH AUTHOR
+.PP
+This manual page was written by Michael Stapelberg <stapelberg@debian.org>
+and is maintained by the
+Debian Go Compiler Team <team+go-compiler@tracker.debian.org>
+based on the output of 'go help vet'
+for the Debian project (and may be used by others).

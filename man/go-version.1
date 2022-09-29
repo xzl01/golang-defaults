@@ -1,0 +1,34 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH GO-VERSION 1 "2021-09-06"
+.\" Please adjust this date whenever revising the manpage.
+.SH NAME
+go-version \- print the build information for Go executables
+.SH SYNOPSIS
+.B go version
+.RB [ \-m ]
+.RB [ \-v ]
+.RI [ "file ..." ]
+.SH DESCRIPTION
+Go version reports the Go version used to build each of the named
+executable files.
+.P
+If no files are named on the command line, go version prints its own
+version information.
+.P
+If a directory is named, go version walks that directory, recursively,
+looking for recognized Go binaries and reporting their versions.
+By default, go version does not report unrecognized files found
+during a directory scan. The \-v flag causes it to report unrecognized files.
+.P
+The \-m flag causes go version to print each executable's embedded
+module version information, when available. In the output, the module
+information consists of multiple lines following the version line, each
+indented by a leading tab character.
+.SH SEE ALSO
+go doc runtime/debug.BuildInfo.
+.SH AUTHOR
+This manual page was written by Michael Stapelberg <stapelberg@debian.org>
+and is maintained by the
+Debian Go Compiler Team <team+go-compiler@tracker.debian.org>
+based on the output of 'go help version'
+for the Debian project (and may be used by others).
