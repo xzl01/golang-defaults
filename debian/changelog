@@ -1,3 +1,15 @@
+golang-defaults (2:1.20~1deepin2) unstable; urgency=medium
+
+  * feat: add loong64
+
+ -- Chang Yang <yangchang@deepin.org>  Mon, 25 Dec 2023 10:15:23 +0800
+
+golang-defaults (2:1.20~1deepin1) unstable; urgency=medium
+
+  * change default gccgo to 13
+
+ -- Chang Yang <yangchang@deepin.org>  Fri, 22 Dec 2023 12:00:27 +0800
+
 golang-defaults (2:1.20~1) unstable; urgency=medium
 
   * Update to Go 1.20.

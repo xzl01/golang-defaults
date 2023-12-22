@@ -18,7 +18,7 @@ Homepage: https://golang.org
 Rules-Requires-Root: no
 
 Package: golang-go
-Architecture: amd64 arm64 armel armhf i386 mips mips64el mipsel ppc64el riscv64 s390x
+Architecture: amd64 arm64 armel armhf i386 loong64 mips mips64el mipsel ppc64el riscv64 s390x
 Multi-Arch: same
 Depends: golang-${golang:GOVER}-go,
          golang-src (>= ${source:Version}),
@@ -95,7 +95,7 @@ Description: Go programming language -- gccgo on "non-Go" platforms
 Package: gccgo-go
 Architecture: any
 Multi-Arch: same
-Depends: gccgo-11,
+Depends: gccgo-13,
          ${misc:Depends}
 Conflicts: golang-go
 Description: Go programming language -- gccgo
@@ -153,7 +153,7 @@ Description: Go programming language - documentation
  http://localhost:6060/doc/install.html.
 
 Package: golang
-Architecture: amd64 arm64 armel armhf i386 mips mips64el mipsel ppc64el riscv64 s390x
+Architecture: amd64 arm64 armel armhf i386 loong64 mips mips64el mipsel ppc64el riscv64 s390x
 Multi-Arch: same
 Depends: golang-${golang:GOVER},
          golang-doc (>= ${source:Version}),
