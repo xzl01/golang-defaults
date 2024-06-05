@@ -8,7 +8,7 @@
 .ft R
 .fi
 ..
-.TH GO-RUN 1 "2021-10-15"
+.TH GO-RUN 1 "2022-08-02"
 .\" Please adjust this date whenever revising the manpage.
 .SH NAME
 go-run \- compile and run Go program
@@ -45,6 +45,10 @@ on the current search path, 'go run' invokes the binary using that program,
 for example 'go_js_wasm_exec a.out arguments...'. This allows execution of
 cross-compiled programs when a simulator or other execution method is
 available.
+.P
+By default, \(oqgo run\(cq compiles the binary without generating the information
+used by debuggers, to reduce build time. To include debugger information in
+the binary, use \(oqgo build\(cq.
 .P
 The exit status of Run is not the exit status of the compiled binary.
 .P

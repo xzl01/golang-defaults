@@ -8,7 +8,7 @@
 .ft R
 .fi
 ..
-.TH GO-LIST 1 "2021-10-15"
+.TH GO-LIST 1 "2022-08-02"
 .\" Please adjust this date whenever revising the manpage.
 .SH NAME
 go-list \- list packages or modules
@@ -158,7 +158,10 @@ for the go/build package's Context type.
 .TP
 .B \-json
 The \-json flag causes the package data to be printed in JSON format
-instead of using the template format.
+instead of using the template format. The JSON flag can optionally be
+provided with a set of comma-separated required field names to be output.
+If so, those required fields will always appear in JSON output, but
+others may be omitted to save work in computing the JSON struct.
 .TP
 .B \-compiled
 The \-compiled flag causes list to set CompiledGoFiles to the Go source
@@ -187,7 +190,8 @@ a non-nil Error field; other information may or may not be missing
 .TP
 .B \-export
 The \-export flag causes list to set the Export field to the name of a
-file containing up-to-date export information for the given package.
+file containing up-to-date export information for the given package,
+and the BuildID field to the build ID of the compiled package.
 .TP
 .B \-find
 The \-find flag causes list to identify the named packages but not
@@ -225,18 +229,23 @@ applied to a Go struct, but now a Module struct:
 
 .Vb 6
 \&    type Module struct {
-\&        Path      string       // module path
-\&        Version   string       // module version
-\&        Versions  []string     // available module versions (with -versions)
-\&        Replace   *Module      // replaced by this module
-\&        Time      *time.Time   // time version was created
-\&        Update    *Module      // available update, if any (with -u)
-\&        Main      bool         // is this the main module?
-\&        Indirect  bool         // is this module only an indirect dependency of main module?
-\&        Dir       string       // directory holding files for this module, if any
-\&        GoMod     string       // path to go.mod file used when loading this module, if any
-\&        GoVersion string       // go version used in module
-\&        Error     *ModuleError // error loading module
+\&        Path       string        // module path
+\&        Query      string        // version query corresponding to this version
+\&        Version    string        // module version
+\&        Versions   []string      // available module versions
+\&        Replace    *Module       // replaced by this module
+\&        Time       *time.Time    // time version was created
+\&        Update     *Module       // available update (with -u)
+\&        Main       bool          // is this the main module?
+\&        Indirect   bool          // module is only indirectly needed by main module
+\&        Dir        string        // directory holding local copy of files, if any
+\&        GoMod      string        // path to go.mod file describing module, if any
+\&        GoVersion  string        // go version used in module
+\&        Retracted  []string      // retraction information, if any (with -retracted or -u)
+\&        Deprecated string        // deprecation message, if any (with -u)
+\&        Error      *ModuleError  // error loading module
+\&        Origin     any           // provenance of module
+\&        Reuse      bool          // reuse of old module info is safe
 \&    }
 \&
 \&    type ModuleError struct {
@@ -320,6 +329,16 @@ The template function "module" takes a single string argument
 that must be a module path or query and returns the specified
 module as a Module struct. If an error occurs, the result will
 be a Module struct with a non-nil Error field.
+.P
+When using \-m, the \-reuse=old.json flag accepts the name of file containing
+the JSON output of a previous \(oqgo list \-m \-json\(cq invocation with the
+same set of modifier flags (such as \-u, \-retracted, and \-versions).
+The go command may use this file to determine that a module is unchanged
+since the previous invocation and avoid redownloading information about it.
+Modules that are not redownloaded will be marked in the new output by
+setting the Reuse field to true. Normally the module cache provides this
+kind of reuse automatically; the \-reuse flag can be useful on systems that
+do not preserve the module cache.
 .P
 For more about build flags, see \fBgo-build\fP(1) or 'go help build'.
 .P

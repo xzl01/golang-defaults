@@ -1,20 +1,101 @@
-golang-defaults (2:1.20~1deepin2) unstable; urgency=medium
+golang-defaults (2:1.22~3) unstable; urgency=medium
 
-  * feat: add loong64
+  * Enable golang-go on loong64
 
- -- Chang Yang <yangchang@deepin.org>  Mon, 25 Dec 2023 10:15:23 +0800
+ -- Shengjing Zhu <zhsj@debian.org>  Wed, 06 Mar 2024 16:00:15 +0800
 
-golang-defaults (2:1.20~1deepin1) unstable; urgency=medium
+golang-defaults (2:1.22~2) unstable; urgency=medium
 
-  * change default gccgo to 13
+  * Team upload
+  * Upload to unstable
 
- -- Chang Yang <yangchang@deepin.org>  Fri, 22 Dec 2023 12:00:27 +0800
+ -- Shengjing Zhu <zhsj@debian.org>  Mon, 26 Feb 2024 17:15:02 +0800
+
+golang-defaults (2:1.22~1) experimental; urgency=medium
+
+  * Team upload
+  * Update to Go 1.22 (src:golang-1.22)
+  * Bump gccgo to 14: gccgo-14 only implements go1.18.
+
+ -- Shengjing Zhu <zhsj@debian.org>  Thu, 22 Feb 2024 15:26:22 +0800
+
+golang-defaults (2:1.21~3) unstable; urgency=medium
+
+  * Extend golang-go to ppc64, but golang-any still points to gccgo-go
+    on ppc64.
+    This helps packages that want to use golang-go to on ppc64 even if it
+    violates the baseline requirements.
+
+ -- Shengjing Zhu <zhsj@debian.org>  Wed, 21 Feb 2024 18:51:50 +0800
+
+golang-defaults (2:1.21~2) unstable; urgency=medium
+
+  * Team upload
+  * Upload to unstable
+
+ -- Shengjing Zhu <zhsj@debian.org>  Wed, 16 Aug 2023 11:04:02 +0800
+
+golang-defaults (2:1.21~1) experimental; urgency=medium
+
+  * Team upload
+  * Make golang-any depends on determinate package (Closes: #1031351)
+  * Update to Go 1.21 (src:golang-1.21)
+
+ -- Shengjing Zhu <zhsj@debian.org>  Wed, 09 Aug 2023 16:45:21 +0800
+
+golang-defaults (2:1.20~2) unstable; urgency=medium
+
+  * Team upload
+  * Bump gccgo to 13: gccgo-13 only implements go1.18.
+
+ -- Shengjing Zhu <zhsj@debian.org>  Sun, 25 Jun 2023 23:39:28 +0800
 
 golang-defaults (2:1.20~1) unstable; urgency=medium
 
-  * Update to Go 1.20.
+  * Team upload
+  * Update Standards-Version to 4.6.2 (no changes)
+  * Update to Go 1.20 (src:golang-1.20)
 
- -- LiChengGang <lichenggang@uniontech.com>  Wed, 22 Mar 2023 17:30:24 +0800
+ -- Shengjing Zhu <zhsj@debian.org>  Sun, 11 Jun 2023 17:04:31 +0800
+
+golang-defaults (2:1.19~1) unstable; urgency=medium
+
+  * Update to Go 1.19 (src:golang-1.19)
+  * Update existing man pages to Go 1.19
+  * Add debian/README.source on keeping the man pages updated
+  * Bump Standards-Version to 4.6.1 (no change)
+
+ -- Anthony Fok <foka@debian.org>  Sat, 06 Aug 2022 13:09:49 -0600
+
+golang-defaults (2:1.18~3) unstable; urgency=medium
+
+  * Have gccgo-go depend on g++-12 too, as go-12 "go env CXX" refers
+    specifically to "${DEB_BUILD_GNU_TYPE}-g++-12", but g++-12 does not
+    get installed when the default g++ is still version 11.
+
+ -- Anthony Fok <foka@debian.org>  Tue, 22 Mar 2022 06:45:47 -0600
+
+golang-defaults (2:1.18~2) unstable; urgency=medium
+
+  * Bump gccgo to 12: gccgo-12 implements go1.18.
+    Thanks to Shengjing Zhu for letting me know!
+
+ -- Anthony Fok <foka@debian.org>  Mon, 21 Mar 2022 10:07:36 -0600
+
+golang-defaults (2:1.18~1) unstable; urgency=medium
+
+  [ Jelmer Vernooĳ: deb-scrub-obsolete ]
+  * Remove constraints unnecessary since buster
+    - golang-go: Drop versioned constraint on golang-doc and golang-go.tools
+      in Replaces and Breaks.
+
+  [ Anthony Fok ]
+  * Update to Go 1.18 (src:golang-1.18)
+  * Update man pages to Go 1.18
+  * Reorder fields in debian/control
+    as would be generated in the next dh-make-golang release after 0.6.0-1
+
+ -- Anthony Fok <foka@debian.org>  Mon, 21 Mar 2022 00:03:54 -0600
 
 golang-defaults (2:1.17~1) unstable; urgency=medium
 
@@ -163,7 +244,7 @@ golang-defaults (2:1.9~2) unstable; urgency=medium
 
 golang-defaults (2:1.9~1) unstable; urgency=medium
 
-  [ Martín Ferrari ]
+  [ Martina Ferrari ]
   * Add myself to Uploaders.
 
   [ Michael Stapelberg ]

@@ -1,5 +1,5 @@
 .\"                                      Hey, EMACS: -*- nroff -*-
-.TH GO-INSTALL 1 "2021-09-06"
+.TH GO-INSTALL 1 "2022-03-15"
 .\" Please adjust this date whenever revising the manpage.
 .SH NAME
 go \- tool for managing Go source code
@@ -31,18 +31,21 @@ allowed, even if they refer to the same version.
 .IP \[bu]
 All arguments must refer to packages in the same module at the same version.
 .IP \[bu]
+Package path arguments must refer to main packages. Pattern arguments
+will only match main packages.
+.IP \[bu]
 No module is considered the "main" module. If the module containing
 packages named on the command line has a go.mod file, it must not contain
 directives (replace and exclude) that would cause it to be interpreted
 differently than if it were the main module. The module must not require
 a higher version of itself.
 .IP \[bu]
-Package path arguments must refer to main packages. Pattern arguments
-will only match main packages.
+Vendor directories are not used in any module. (Vendor directories are not
+included in the module zip files downloaded by \(oqgo install\(cq.)
 .P
-If the arguments don't have version suffixes, "go install" may run in
+If the arguments don\(cqt have version suffixes, "go install" may run in
 module-aware mode or GOPATH mode, depending on the GO111MODULE environment
-variable and the presence of a go.mod file. See 'go help modules' for details.
+variable and the presence of a go.mod file. See \(oqgo help modules\(cq for details.
 If module-aware mode is enabled, "go install" runs in the context of the main
 module.
 .P
@@ -52,7 +55,7 @@ other packages are built and cached but not installed.
 .P
 The \-i flag installs the dependencies of the named packages as well.
 .br
-The -i flag is deprecated. Compiled packages are cached automatically.
+The \-i flag is deprecated. Compiled packages are cached automatically.
 .P
 For more about the build flags, see \fBgo-build\fP(1).
 .br
@@ -66,5 +69,5 @@ For more about specifying packages, see \fBgo-packages\fP(7).
 This manual page was written by Michael Stapelberg <stapelberg@debian.org>
 and is maintained by the
 Debian Go Compiler Team <team+go-compiler@tracker.debian.org>
-based on the output of 'go help install'
+based on the output of \(oqgo help install\(cq
 for the Debian project (and may be used by others).

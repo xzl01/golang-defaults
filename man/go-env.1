@@ -1,5 +1,5 @@
 .\"                                      Hey, EMACS: -*- nroff -*-
-.TH GO-ENV 1 "2021-09-06"
+.TH GO-ENV 1 "2022-03-15"
 .\" Please adjust this date whenever revising the manpage.
 .SH NAME
 go-env \- print Go environment information
@@ -24,18 +24,18 @@ instead of as a shell script.
 .B \-u
 requires one or more arguments and unsets
 the default setting for the named environment variables,
-if one has been set with 'go env -w'.
+if one has been set with \(oqgo env -w\(cq.
 .TP
 .B \-w
 requires one or more arguments of the
 form NAME=VALUE and changes the default settings
 of the named environment variables to the given values.
 .P
-For more about environment variables, see 'go help environment'.
+For more about environment variables, see \(oqgo help environment\(cq.
 .SH AUTHOR
 .P
 This manual page was written by Michael Stapelberg <stapelberg@debian.org>
 and is maintained by the
 Debian Go Compiler Team <team+go-compiler@tracker.debian.org>
-based on the output of 'go help env'
+based on the output of \(oqgo help env\(cq
 for the Debian project (and may be used by others).

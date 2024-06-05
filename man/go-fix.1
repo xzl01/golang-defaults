@@ -1,5 +1,5 @@
 .\"                                      Hey, EMACS: -*- nroff -*-
-.TH GO-FIX 1 "2021-09-06"
+.TH GO-FIX 1 "2022-03-15"
 .\" Please adjust this date whenever revising the manpage.
 .SH NAME
 go-fix \- update packages to use new APIs
@@ -9,11 +9,15 @@ go-fix \- update packages to use new APIs
 .SH DESCRIPTION
 Fix runs the Go fix command on the packages named by the import paths.
 .P
-For more about fix, see 'go doc cmd/fix'.
+The \-fix flag sets a comma-separated list of fixes to run.
+The default is all known fixes.
+(Its value is passed to \(oqgo tool fix \-r\(cq.)
+.P
+For more about fix, see \(oqgo doc cmd/fix\(cq.
 .br
 For more about specifying packages, see \fBgo-packages\fP(7).
 .P
-To run fix with specific options, run 'go tool fix'.
+To run fix with other options, run \(oqgo tool fix\(cq.
 .SH SEE ALSO
 .BR go-fmt (1),
 .BR go-vet (1).
@@ -21,5 +25,5 @@ To run fix with specific options, run 'go tool fix'.
 This manual page was written by Michael Stapelberg <stapelberg@debian.org>
 and is maintained by the
 Debian Go Compiler Team <team+go-compiler@tracker.debian.org>
-based on the output of 'go help fix'
+based on the output of \(oqgo help fix\(cq
 for the Debian project (and may be used by others).

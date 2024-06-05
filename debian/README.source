@@ -1,0 +1,47 @@
+Keeping man pages up-to-date between Go releases
+================================================
+
+A new Go release naturally comes with updated (and new) documentation,
+and it is important to keep at least existing man pages up-to-date so as
+not to present outdated or even incorrect information to the end users.
+
+To get an overview of the changes with Git:
+
+    git diff upstream/1.18..upstream/1.19 src/cmd/go/alldocs.go
+
+(optionally, add "-w" flag to ignore whitespaces when necessary.)
+
+I also use something like the following quick-and-dirty commands to
+manually check for changes in existing man pages (non-comprehensive):
+
+    oldver=1.18
+    newver=1.19
+    for manpage in man/go-*.?; do
+        topic=$(echo $manpage | sed 's/^man\/go-//; s/\.[1-8]$//')
+        echo -e "\n$manpage ======================================\n"
+        for ver in $oldver $newver; do
+            /usr/lib/go-$ver/bin/go help $topic &> /tmp/$ver-go-$topic
+        done
+        colordiff -u /tmp/$oldver-go-$topic /tmp/$newver-go-$topic
+    done | less -R
+
+I then inspect the output, copy-and-paste the changes, and replace
+single quotes to \(oq or \(cq, prepend a backslash before a hyphen, etc.
+where necessary.
+
+Note that many "go help" commands and topics were added over the years
+and are missing man pages, such as:
+
+ * go help generate
+ * go help mod download
+ * go help buildconstraints
+ * ...
+
+However, given how labour-intensive this process is, and not knowing how to
+automate such man page updates, I am personally avoiding the creation of
+any more new man pages due to lack of time and energy.
+
+That said, if you are interested, please feel free to contribute!  :-)
+Thank you!
+
+ -- Anthony Fok <foka@debian.org>  Sat, 06 Aug 2022 12:50:00 -0600

@@ -2,9 +2,10 @@
 # -*- makefile -*-
 
 export GOVER := $(shell debian/helpers/getver.pl)
+export GODEFAULT := $(shell debian/helpers/getdefault.pl)
 
 %:
 	dh $@
 
 override_dh_gencontrol:
-	dh_gencontrol -- -Vgolang:GOVER=$(GOVER)
+	dh_gencontrol -- -Vgolang:Version=$(GOVER) -Vgolang:Default=$(GODEFAULT)
