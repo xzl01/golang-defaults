@@ -8,12 +8,12 @@
 .ft R
 .fi
 ..
-.TH GO-TESTFUNC 7 "2021-10-15"
+.TH GO-TESTFUNC 7 "2022-03-15"
 .\" Please adjust this date whenever revising the manpage.
 .SH NAME
 go \- tool for managing Go source code
 .SH DESCRIPTION
-The 'go test' command expects to find test, benchmark, and example functions
+The \(oqgo test\(cq command expects to find test, benchmark, and example functions
 in the "*_test.go" files corresponding to the package under test.
 
 A test function is one named TestXxx (where Xxx does not start with a
@@ -27,6 +27,12 @@ A benchmark function is one named BenchmarkXxx and should have the signature,
 
 .Vb 6
 \&      func BenchmarkXxx(b *testing.B) { ... }
+.Ve
+
+A fuzz test is one named FuzzXxx and should have the signature,
+
+.Vb 6
+\&      func FuzzXxx(f *testing.F) { ... }
 .Ve
 
 An example function is similar to a test function but, instead of using
@@ -72,7 +78,7 @@ Here is another example where the ordering of the output is ignored:
 
 The entire test file is presented as the example when it contains a single
 example function, at least one other function, type, variable, or constant
-declaration, and no test or benchmark functions.
+declaration, and no tests, benchmarks, or fuzz tests.
 
 See the documentation of the testing package for more information.
 .SH AUTHOR
@@ -80,5 +86,5 @@ See the documentation of the testing package for more information.
 This manual page was written by Michael Stapelberg <stapelberg@debian.org>
 and is maintained by the
 Debian Go Compiler Team <team+go-compiler@tracker.debian.org>
-based on the output of 'go help testfunc'
+based on the output of \(oqgo help testfunc\(cq
 for the Debian project (and may be used by others).

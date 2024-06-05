@@ -14,7 +14,6 @@
 go-get \- add dependencies to current module and install them
 .SH SYNOPSIS
 .B go get
-.RB [\|\-d\|]
 .RB [\|\-t\|]
 .RB [\|\-u\|]
 .RB [\|\-v\|]
@@ -22,8 +21,8 @@ go-get \- add dependencies to current module and install them
 .RI [ packages ]
 .SH DESCRIPTION
 Get resolves its command-line arguments to packages at specific module versions,
-updates go.mod to require those versions, downloads source code into the
-module cache, then builds and installs the named packages.
+updates go.mod to require those versions, and downloads source code into the
+module cache.
 .P
 To add a dependency for a package or upgrade it to its latest version:
 
@@ -45,46 +44,41 @@ To remove a dependency on a module and downgrade modules that require it:
 .P
 See https://golang.org/ref/mod#go-get for details.
 .P
-The 'go install' command may be used to build and install packages. When a
-version is specified, 'go install' runs in module-aware mode and ignores
-the go.mod file in the current directory. For example:
+In earlier versions of Go, \(oqgo get\(cq was used to build and install packages.
+Now, \(oqgo get\(cq is dedicated to adjusting dependencies in go.mod. \(oqgo install'
+may be used to build and install commands instead. When a version is specified,
+\(oqgo install\(cq runs in module-aware mode and ignores the go.mod file in the
+current directory. For example:
 
 .Vb 6
 \&        go install example.com/pkg@v1.2.3
 \&        go install example.com/pkg@latest
 .Ve
 .P
-See 'go help install' or https://golang.org/ref/mod#go-install for details.
+See \(oqgo help install\(cq or https://golang.org/ref/mod#go-install for details.
 .P
-In addition to build flags (listed in 'go help build') 'go get' accepts the
-following flags.
+\(oqgo get\(cq accepts the following flags.
 .TP
 .B \-t
-The -t flag instructs get to consider modules needed to build tests of
+The \-t flag instructs get to consider modules needed to build tests of
 packages specified on the command line.
 .TP
 .B \-u
-The -u flag instructs get to update modules providing dependencies
+The \-u flag instructs get to update modules providing dependencies
 of packages named on the command line to use newer minor or patch
 releases when available.
 .TP
 .BI \-u= patch
-The -u=patch flag (not -u patch) also instructs get to update dependencies,
+The \-u=\fIpatch\fP flag (not \-u \fIpatch\fP) also instructs get to update dependencies,
 but changes the default to select patch releases.
 .P
-When the -t and -u flags are used together, get will update
+When the \-t and \-u flags are used together, get will update
 test dependencies as well.
 .TP
-.B \-d
-The \-d flag instructs get not to build or install packages. get will only
-update go.mod and download source code needed to build packages.
-.P
-Building and installing packages with get is deprecated. In a future release,
-the \-d flag will be enabled by default, and 'go get' will be only be used to
-adjust dependencies of the current module. To install a package using
-dependencies from the current module, use 'go install'. To install a package
-ignoring the current module, use 'go install' with an @version suffix like
-"@latest" after each argument.
+.B \-x
+The \-x flag prints commands as they are executed. This is useful for
+debugging version control commands when a module is downloaded directly
+from a repository.
 .P
 For more about modules, see https://golang.org/ref/mod.
 .P
@@ -92,8 +86,8 @@ For more about specifying packages, see \fBgo-packages\fP(7).
 .P
 This text describes the behavior of get using modules to manage source
 code and dependencies. If instead the go command is running in GOPATH
-mode, the details of get's flags and effects change, as does 'go help get'.
-See 'go help gopath-get' or \fBgo-gopath-get\fP(1).
+mode, the details of get's flags and effects change, as does \(oqgo help get'.
+See \(oqgo help gopath-get\(cq or \fBgo-gopath-get\fP(1).
 .SH SEE ALSO
 .BR go-build (1),
 .BR go-install (1),
@@ -102,5 +96,5 @@ See 'go help gopath-get' or \fBgo-gopath-get\fP(1).
 .SH AUTHOR
 This manual page and is maintained by the 
 Debian Go Compiler Team <team+go-compiler@tracker.debian.org>
-based on the output of 'go help get'
+based on the output of \(oqgo help get'
 for the Debian project (and may be used by others).

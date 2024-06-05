@@ -8,26 +8,26 @@
 .ft R
 .fi
 ..
-.TH GO-TESTFLAG 7 "2021-10-15"
+.TH GO-TESTFLAG 7 "2022-03-15"
 .\" Please adjust this date whenever revising the manpage.
 .SH NAME
 go \- tool for managing Go source code
 .SH DESCRIPTION
-The 'go test' command takes both flags that apply to 'go test' itself
+The \(oqgo test\(cq command takes both flags that apply to \(oqgo test\(cq itself
 and flags that apply to the resulting test binary.
 
 Several of the flags control profiling and write an execution profile
-suitable for "go tool pprof"; run "go tool pprof -h" for more
-information. The --alloc_space, --alloc_objects, and --show_bytes
+suitable for "go tool pprof"; run "go tool pprof \-h" for more
+information. The \-\-alloc_space, \-\-alloc_objects, and \-\-show_bytes
 options of pprof control how the information is presented.
 
-The following flags are recognized by the 'go test' command and
+The following flags are recognized by the \(oqgo test\(cq command and
 control the execution of any test:
 .TP
 .BI \-bench " regexp"
 Run only those benchmarks matching a regular expression.
 By default, no benchmarks are run.
-To run all benchmarks, use '\-bench .' or '\-bench=.'.
+To run all benchmarks, use \(oq\-bench .\(cq or \(oq\-bench=.\(cq.
 The regular expression is split by unbracketed slash (/)
 characters into a sequence of regular expressions, and each
 part of a benchmark\[cq]s identifier must match the corresponding
@@ -47,18 +47,19 @@ The special syntax \fIN\fPx means to run the benchmark \fIN\fP times
 (for example, \-benchtime 100x).
 .TP
 .BI \-count " n"
-Run each test and benchmark \fIn\fP times (default 1).
+Run each test, benchmark, and fuzz seed \fIn\fP times (default 1).
 .br
-If -cpu is set, run n times for each GOMAXPROCS value.
+If \-cpu is set, run n times for each GOMAXPROCS value.
 .br
-Examples are always run once.
+Examples are always run once. \-count does not apply to
+fuzz tests matched by \-fuzz.
 .TP
 .B \-cover
 Enable coverage analysis.
 .br
 Note that because coverage works by annotating the source
 code before compilation, compilation and test failures with
-coverage enabled may report line numbers that don't correspond
+coverage enabled may report line numbers that don\(cqt correspond
 to the original sources.
 .TP
 .BR \-covermode " set,count,atomic"
@@ -78,37 +79,76 @@ Sets \-cover.
 Apply coverage analysis in each test to packages matching the patterns.
 The default is for each test to analyze only the package being tested.
 .br
-See 'go help packages' for a description of package patterns.
+See \(oqgo help packages\(cq for a description of package patterns.
 .br
 Sets \-cover.
 .TP
 .BI "\-cpu " 1 , 2 , 4
-Specify a list of GOMAXPROCS values for which the tests or
-benchmarks should be executed. The default is the current value
-of GOMAXPROCS.
+Specify a list of GOMAXPROCS values for which the tests, benchmarks or
+fuzz tests should be executed. The default is the current value
+of GOMAXPROCS. \-cpu does not apply to fuzz tests matched by \-fuzz.
 .TP
 .B \-failfast
 Do not start new tests after the first test failure.
 .TP
+.BI \-fuzz " regexp"
+Run the fuzz test matching the regular expression. When specified,
+the command line argument must match exactly one package within the
+main module, and regexp must match exactly one fuzz test within
+that package. Fuzzing will occur after tests, benchmarks, seed corpora
+of other fuzz tests, and examples have completed. See the Fuzzing
+section of the testing package documentation for details.
+.TP
+.BI \-fuzztime " t"
+Run enough iterations of the fuzz target during fuzzing to take \fIt\fP,
+specified as a time.Duration (for example, \-fuzztime 1h30s).
+    The default is to run forever.
+.br
+The special syntax \fIN\fPx means to run the fuzz target \fIN\fP times
+(for example, \-fuzztime 1000x).
+.TP
+.BI \-fuzzminimizetime " t"
+Run enough iterations of the fuzz target during each minimization
+attempt to take \fIt\fP, as specified as a time.Duration (for example,
+\-fuzzminimizetime 30s).
+    The default is 60s.
+.br
+The special syntax \fIN\fPx means to run the fuzz target \fIN\fP times
+(for example, \-fuzzminimizetime 100x).
+.TP
+.B \-json
+Log verbose output and test results in JSON. This presents the
+same information as the \-v flag in a machine-readable format.
+.TP
 .BI \-list " regexp"
-List tests, benchmarks, or examples matching the regular expression.
-No tests, benchmarks or examples will be run. This will only
-list top-level tests. No subtest or subbenchmarks will be shown.
+List tests, benchmarks, fuzz tests, or examples matching the regular
+expression. No tests, benchmarks, fuzz tests, or examples will be run.
+This will only list top-level tests. No subtest or subbenchmarks will be
+shown.
 .TP
 .BI \-parallel " n"
-Allow parallel execution of test functions that call t.Parallel.
+Allow parallel execution of test functions that call t.Parallel, and
+fuzz targets that call t.Parallel when running the seed corpus.
 The value of this flag is the maximum number of tests to run
-simultaneously; by default, it is set to the value of GOMAXPROCS.
-Note that -parallel only applies within a single test binary.
-The 'go test' command may run tests for different packages
+simultaneously.
+.br
+While fuzzing, the value of this flag is the maximum number of
+subprocesses that may call the fuzz function simultaneously, regardless of
+whether T.Parallel is called.
+.br
+By default, \-parallel is set to the value of GOMAXPROCS.
+Setting \-parallel to values higher than GOMAXPROCS may cause degraded
+performance due to CPU contention, especially when fuzzing.
+Note that \-parallel only applies within a single test binary.
+The \(oqgo test\(cq command may run tests for different packages
 in parallel as well, according to the setting of the \-p flag
-(see 'go help build').
+(see \(oqgo help build\(cq).
 .TP
 .BI \-run " regexp"
-Run only those tests and examples matching the regular expression.
-For tests, the regular expression is split by unbracketed slash (/)
-characters into a sequence of regular expressions, and each part
-of a test's identifier must match the corresponding element in
+Run only those tests, examples, and fuzz tests matching the regular
+expression. For tests, the regular expression is split by unbracketed
+slash (/) characters into a sequence of regular expressions, and each
+part of a test\(cqs identifier must match the corresponding element in
 the sequence, if any. Note that possible parents of matches are
 run too, so that \-run=X/Y matches and runs and reports the result
 of all tests matching X, even those without sub-tests matching Y,
@@ -147,7 +187,7 @@ checks believed to be always worth addressing.
 .br
 If list is "off", "go test" does not run "go vet" at all.
 .P
-The following flags are also recognized by 'go test' and can be used to
+The following flags are also recognized by \(oqgo test\(cq and can be used to
 profile the tests during execution:
 .TP
 .B \-benchmem
@@ -163,7 +203,7 @@ Writes test binary as \-c would.
 Control the detail provided in goroutine blocking profiles by
 calling runtime.SetBlockProfileRate with \fIn\fP.
 .br
-See 'go doc runtime.SetBlockProfileRate'.
+See \(oqgo doc runtime.SetBlockProfileRate\(cq.
 .br
 The profiler aims to sample, on average, one blocking event every
 n nanoseconds the program spends blocked. By default,
@@ -187,7 +227,7 @@ Writes test binary as \-c would.
 .TP
 .BI \-memprofilerate " n"
 Enable more precise (and expensive) memory allocation profiles by
-setting runtime.MemProfileRate. See 'go doc runtime.MemProfileRate'.
+setting runtime.MemProfileRate. See \(oqgo doc runtime.MemProfileRate\(cq.
 To profile all memory allocations, use \-test.memprofilerate=1.
 .TP
 .B \-mutexprofile \fRmutex.out
@@ -204,14 +244,14 @@ contended mutex.
 Place output files from profiling in the specified directory,
 by default the directory in which "go test" is running.
 .TP
-.B \-trace \fNtrace.out
+.B \-trace trace.out
 Write an execution trace to the specified file before exiting.
 .P
-Each of these flags is also recognized with an optional 'test.' prefix,
+Each of these flags is also recognized with an optional \(oqtest.\(cq prefix,
 as in \-test.v. When invoking the generated test binary (the result of
 \(oqgo test \-c\(cq) directly, however, the prefix is mandatory.
 
-The 'go test' command rewrites or removes recognized flags,
+The \(oqgo test\(cq command rewrites or removes recognized flags,
 as appropriate, both before and after the optional package list,
 before invoking the test binary.
 
@@ -223,30 +263,34 @@ will compile the test binary and then run it as
 
 	pkg.test \-test.v \-myflag testdata \-test.cpuprofile=prof.out
 
-(The \-x flag is removed because it applies only to the go command's
+(The \-x flag is removed because it applies only to the go command\(cqs
 execution, not to the test itself.)
 
 The test flags that generate profiles (other than for coverage) also
 leave the test binary in pkg.test for use when analyzing the profiles.
 
-When 'go test' runs a test binary, it does so from within the
-corresponding package's source code directory. Depending on the test,
+When \(oqgo test\(cq runs a test binary, it does so from within the
+corresponding package\(cqs source code directory. Depending on the test,
 it may be necessary to do the same when invoking a generated test
-binary directly.
+binary directly. Because that directory may be located within the
+module cache, which may be read-only and is verified by checksums, the
+test must not write to it or any other directory within the module
+unless explicitly requested by the user (such as with the \-fuzz flag,
+which writes failures to testdata/fuzz).
 
 The command-line package list, if present, must appear before any
 flag not known to the go test command. Continuing the example above,
 the package list would have to appear before \-myflag, but could appear
 on either side of \-v.
 
-When 'go test' runs in package list mode, 'go test' caches successful
+When \(oqgo test\(cq runs in package list mode, \(oqgo test\(cq caches successful
 package test results to avoid unnecessary repeated running of tests. To
 disable test caching, use any test flag or argument other than the
 cacheable flags. The idiomatic way to disable test caching explicitly
 is to use \-count=1.
 
 To keep an argument for a test binary from being interpreted as a
-known flag or a package name, use \-args (see 'go help test') which
+known flag or a package name, use \-args (see \(oqgo help test\(cq) which
 passes the remainder of the command line through to the test binary
 uninterpreted and unaltered.
 
@@ -275,5 +319,5 @@ binary, instead of being interpreted as the package list.
 This manual page was written by Michael Stapelberg <stapelberg@debian.org>
 and is maintained by the
 Debian Go Compiler Team <team+go-compiler@tracker.debian.org>
-based on the output of 'go help testflag'
+based on the output of \(oqgo help testflag\(cq
 for the Debian project (and may be used by others).

@@ -1,5 +1,5 @@
 .\"                                      Hey, EMACS: -*- nroff -*-
-.TH GO-CLEAN 1 "2021-09-06"
+.TH GO-CLEAN 1 "2022-03-15"
 .\" Please adjust this date whenever revising the manpage.
 .SH NAME
 go-clean \- remove object files and cached files
@@ -59,7 +59,7 @@ the package.
 .TP
 .B \-i
 The \-i flag causes clean to remove the corresponding installed
-archive or binary (what 'go install' would create).
+archive or binary (what \(oqgo install\(cq would create).
 .TP
 .B \-n
 The \-n flag causes clean to print the remove commands it would execute,
@@ -83,6 +83,14 @@ go build cache.
 The \-modcache flag causes clean to remove the entire module
 download cache, including unpacked source code of versioned
 dependencies.
+.TP
+.B \-fuzzcache
+The \-fuzzcache flag causes clean to remove files stored in the Go build
+cache for fuzz testing. The fuzzing engine caches files that expand
+code coverage, so removing them may make fuzzing less effective until
+new inputs are found that provide the same coverage. These files are
+distinct from those stored in testdata directory; clean does not remove
+those files.
 .P
 For more about build flags, see \fBgo-build\fP(1).
 .P
@@ -91,5 +99,5 @@ For more about specifying packages, see \fBgo-packages\fP(7).
 This manual page was written by Michael Stapelberg <stapelberg@debian.org>
 and is maintained by the
 Debian Go Compiler Team <team+go-compiler@tracker.debian.org>
-based on the output of 'go help clean'
+based on the output of \(oqgo help clean\(cq
 for the Debian project (and may be used by others).
